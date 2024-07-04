@@ -1,16 +1,25 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
+var todos []int
+
 func main() {
 	fmt.Println("Backend API to manage Todo items")
 	router := mux.NewRouter()
+
+	todos = append(todos, 1)
+	todos = append(todos, 2)
+
+	fmt.Printf("\n todos %v", todos)
 
 	//CRUD
 	router.HandleFunc("/todos", getTodos).Methods("GET")
@@ -25,15 +34,21 @@ func main() {
 
 func getTodos(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("implement")
+	json.NewEncoder(w).Encode(todos)
 	w.WriteHeader(200)
 }
 
 func createTodo(w http.ResponseWriter, r *http.Request) {
+	todos = append(todos, len(todos)+1)
+	fmt.Printf("\nTODO list %v", todos)
 	w.WriteHeader(200)
 }
 
 func getTodo(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(200)
+	params := mux.Vars(r)
+	id := params["id"]
+	fmt.Printf("\n Id is %v", id)
+	w.Write([]byte(id))
 }
 
 func updateTodo(w http.ResponseWriter, r *http.Request) {
@@ -41,5 +56,13 @@ func updateTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteTodo(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	id, _ := strconv.Atoi(params["id"])
+	if id > len(todos)-1 {
+		w.Write([]byte("Invalid ID"))
+		return
+	}
+	todos = append(todos[:id], todos[id+1:]...)
+	fmt.Printf("\nTODO list %v", todos)
 	w.WriteHeader(200)
 }
