@@ -29,6 +29,8 @@ You can interact with the API using tools like curl or Postman.
 
 4. Update Todo by Id
     - `PUT /todos{id}`
+
+    
       **Body:**
       ```json
       {
