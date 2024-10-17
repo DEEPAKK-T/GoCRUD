@@ -18,21 +18,23 @@ You can interact with the API using tools like curl or Postman.
 
 ### Endpoints:
 
-1. Create a Todo
-    - POST /todos
+1. **Create a Todo**
+    - `POST /todos`
 
-2. Get all Todos
-    - GET /todos
+2. **Get all Todos**
+    - `GET /todos`
 
 3. Get Todo by Id
-    - GET /todos{id}
+    - `GET /todos{id}`
 
 4. Update Todo by Id
-    - PUT /todos{id}
-      Body :
+    - `PUT /todos{id}`
+      **Body:**
+      ```json
       {
         "newValue" : 30
       }
+      ```
 
 5. Delete Todo
-    -  DELETE /todos{id}
+    -  `DELETE /todos{id}`
